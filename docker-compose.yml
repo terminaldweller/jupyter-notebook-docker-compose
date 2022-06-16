@@ -1,15 +1,21 @@
-version:  '3'
+version: '3.8'
 services:
-  datascience-notebook:
-      image:    jupyter/datascience-notebook
-      volumes:
-        - ${LOCAL_WORKING_DIR}:/home/jovyan/work
-        - ${LOCAL_DATASETS}:/home/jovyan/work/datasets
-        - ${LOCAL_MODULES}:/home/jovyan/work/modules
-        - ${LOCAL_SSL_CERTS}:/etc/ssl/notebook
-      ports:
-        - ${PORT}:8888
-      container_name:   jupyter_notebook
-      command: "start-notebook.sh \
-        --NotebookApp.password=${ACCESS_TOKEN} \
-        --NotebookApp.certfile=/etc/ssl/notebook/jupyter.pem"
+  jupyterlab_ai:
+    image: devijlab
+    build:
+      context: .
+    volumes:
+      - /home/jupyterlab_docker/datasets:/datasets:ro
+      - /home/jupyterlab_docker/notebooks:/opt/app/data
+    ports:
+      - 8889:8888
+    networks:
+      - devijlab-net
+    entrypoint: ["jupyter", "lab"]
+    command: ["--ip=0.0.0.0", "--port=8888", "--notebook-dir=/opt/app/data", "--allow-root"]
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+volumes:
+  devijlab-vault:
+networks:
+  devijlab-net:
