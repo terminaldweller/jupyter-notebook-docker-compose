@@ -9,13 +9,28 @@ services:
       - /home/jupyterlab_docker/notebooks:/opt/app/data
     ports:
       - 8889:8888
-    networks:
-      - devijlab-net
+    # networks:
+    #   - devijlab-net
+    network_mode: bridge
     entrypoint: ["jupyter", "lab"]
     command: ["--ip=0.0.0.0", "--port=8888", "--notebook-dir=/opt/app/data", "--allow-root"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - JUPYTER_ENABLE_LAB=yes
+      # - HTTP_PROXY=http://host.docker.internal:9995
+      # - HTTPS_PROXY=http://host.docker.internal:9995
+      # - NO_PROXY="localhost, 127.0.0.1"
+      - HTTP_PROXY=socks5://172.17.0.1:9995
+      - HTTPS_PROXY=socks5://172.17.0.1:9995
+      - NO_PROXY="localhost, 127.0.0.1"
 volumes:
   devijlab-vault:
 networks:
   devijlab-net:
+    ipam:
+      driver: overlay
+      config:
+        - subnet: 172.18.0.0/16
+        - ip_range: 172.18.5.0.24
+        - gateway: 172.18.0.1
