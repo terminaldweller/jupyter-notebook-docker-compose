@@ -21,6 +21,7 @@ services:
       - HTTP_PROXY=socks5://172.17.0.1:9995
       - HTTPS_PROXY=socks5://172.17.0.1:9995
       - NO_PROXY="localhost, 127.0.0.1"
+      - NVIDIA_VISIBLE_DEVICES=all
     runtime: nvidia
 volumes:
   devijlab-vault:
