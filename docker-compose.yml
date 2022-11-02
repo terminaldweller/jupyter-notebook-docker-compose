@@ -1,12 +1,12 @@
 version: '3.8'
 services:
   jupyterlab_ai:
-    image: devijlab
+    image: devijlab:v0.2
     build:
       context: .
     volumes:
-      - /home/jupyterlab_docker/datasets:/datasets:ro
-      - /home/jupyterlab_docker/notebooks:/opt/app/data
+      - /home/devi/jupyterlab_docker/datasets:/datasets:ro
+      - /home/devi/jupyterlab_docker/notebooks:/opt/app/data/
     ports:
       - 8889:8888
     # networks:

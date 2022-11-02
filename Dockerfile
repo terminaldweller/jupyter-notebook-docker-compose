@@ -20,3 +20,6 @@ RUN apt-get -y install nodejs
 # RUN pip install ipywidgets pandas pysocks
 # RUN jupyter labextension install jupyterlab_vim
 COPY --from=certbuilder /certs /certs
+RUN pip install scapy matplotlib
+RUN pip install --upgrade torch
+# RUN apt update && apt install -y tcpdump tshark
