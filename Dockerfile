@@ -3,7 +3,7 @@ RUN apk add openssl
 WORKDIR /certs
 RUN openssl req -nodes -new -x509 -subj="/C=US/ST=Denial/L=springfield/O=Dis/CN=localhost" -keyout server.key -out server.cert && cat server.key server.cert > cert.pem
 
-FROM nvidia/cuda:12.2.2-runtime-ubuntu20.04
+FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update &&\
       apt-get install -y software-properties-common &&\
